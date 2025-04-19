@@ -79,9 +79,15 @@ export const userUpdateController = async (req, res) => {
         throw new ApiError(400, "Bad Request/Invalid userhandle");
     }
 
-    const profilePicture = await uploadOnCloudinary(req.file.path);
+    let updatedUser;
 
-    const updatedUser = await userOperations.userUpdate(user._id, { ...req.body, profilePicture });
+    if (req.file) {
+        const profilePicture = await uploadOnCloudinary(req.file.path);
+
+        updatedUser = await userOperations.userUpdate(user._id, { ...req.body, profilePicture });
+    } else {
+        updatedUser = await userOperations.userUpdate(user._id, req.body);
+    }
 
     return res.status(200).json(new ApiResponse(200, "User updated", updatedUser));
 }
