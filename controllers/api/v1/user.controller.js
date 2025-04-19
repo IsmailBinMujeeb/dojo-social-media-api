@@ -2,6 +2,7 @@ import userOperations from "../../../services/crud.services.js/user.crud.js";
 import ApiError from "../../../utils/ApiError.js";
 import ApiResponse from "../../../utils/ApiResponse.js";
 import authTokensGenerator from "../../../utils/authTokensGenerator.js";
+import uploadOnCloudinary from "../../../utils/cloudinary.js";
 
 export const userRegisterController = async (req, res) => {
 
@@ -78,7 +79,9 @@ export const userUpdateController = async (req, res) => {
         throw new ApiError(400, "Bad Request/Invalid userhandle");
     }
 
-    const updatedUser = await userOperations.userUpdate(user._id, req.body);
+    const profilePicture = await uploadOnCloudinary(req.file.path);
+
+    const updatedUser = await userOperations.userUpdate(user._id, { ...req.body, profilePicture });
 
     return res.status(200).json(new ApiResponse(200, "User updated", updatedUser));
 }

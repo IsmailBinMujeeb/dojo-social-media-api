@@ -3,8 +3,6 @@ import cors from "cors";
 import helmet from "helmet";
 import loggerMiddleware from "./middlewares/logger.middleware.js";
 import cookieParser from "cookie-parser";
-import { config } from "dotenv";
-config();
 
 // Importing routes
 import userRouter from "./routes/api/v1/user.routes.js";
