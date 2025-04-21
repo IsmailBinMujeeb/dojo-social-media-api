@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 // Importing routes
 import userRouter from "./routes/api/v1/user.routes.js";
+import postRouter from "./routes/api/v1/post.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,5 +22,6 @@ app.use(helmet());
 
 // Middleware to handle routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/post", postRouter);
 
 export default app;
