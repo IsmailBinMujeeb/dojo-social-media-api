@@ -4,7 +4,7 @@ import asyncHandler from "../../../utils/asyncHandler.js";
 
 // Importing middlewares
 import authenticationMiddleware from "../../../middlewares/authentication.middleware.js";
-import validatorMiddleware from "../../../middlewares/validator.middleware.js";
+import validator from "../../../middlewares/validator.middleware.js";
 import upload from "../../../middlewares/multer.middleware.js";
 
 // Importing user validation
@@ -14,11 +14,11 @@ import updateUserValidator from "../../../validators/userValidators/update.valid
 
 const router = Router();
 
-router.post("/register", registerUserValidator(), validatorMiddleware, asyncHandler(userRegisterController));
-router.post("/login", loginUserValidator(), validatorMiddleware, asyncHandler(userLoginController));
+router.post("/register", registerUserValidator(), validator, asyncHandler(userRegisterController));
+router.post("/login", loginUserValidator(), validator, asyncHandler(userLoginController));
 router.post("/logout", authenticationMiddleware, asyncHandler(userLogoutController));
 router.get("/profile", authenticationMiddleware, asyncHandler(userProfileController));
-router.put("/update", updateUserValidator(), validatorMiddleware, upload.single('profilePicture'), authenticationMiddleware, asyncHandler(userUpdateController));
+router.put("/update", updateUserValidator(), validator, upload.single('profilePicture'), authenticationMiddleware, asyncHandler(userUpdateController));
 router.delete("/delete", authenticationMiddleware, asyncHandler(userDeleteController));
 
 export default router;
