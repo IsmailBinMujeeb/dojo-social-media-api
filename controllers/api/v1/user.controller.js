@@ -29,7 +29,7 @@ export const userRegisterController = async (req, res) => {
     newUser.refreshToken = authTokens.REFRESH_TOKEN;
     await newUser.save();
 
-    return res.status(201).json(new ApiResponse(201, "User created", newUser));
+    return res.status(201).json(ApiResponse.UserResponse(201, "User created", newUser));
 }
 
 export const userLoginController = async (req, res) => {
@@ -44,7 +44,7 @@ export const userLoginController = async (req, res) => {
         maxAge: 1000 * 60 * 15 // 15 minutes
     });
 
-    return res.status(200).json(new ApiResponse(200, "User logged in", user));
+    return res.status(200).json(ApiResponse.UserResponse(200, "User logged in", user));
 }
 
 export const userLogoutController = async (req, res) => {
@@ -59,7 +59,7 @@ export const userLogoutController = async (req, res) => {
         secure: true
     });
 
-    return res.status(200).json(new ApiResponse(200, "User logged out", user));
+    return res.status(200).json(ApiResponse.UserResponse(200, "User logged out", user));
 }
 
 export const userProfileController = async (req, res) => {
@@ -69,7 +69,7 @@ export const userProfileController = async (req, res) => {
         throw new ApiError(400, "Bad Request/Invalid userhandle");
     }
 
-    return res.status(200).json(new ApiResponse(200, "User profile", user));
+    return res.status(200).json(ApiResponse.UserResponse(200, "User profile", user));
 }
 
 export const userUpdateController = async (req, res) => {
@@ -89,7 +89,7 @@ export const userUpdateController = async (req, res) => {
         updatedUser = await userOperations.userUpdate(user._id, req.body);
     }
 
-    return res.status(200).json(new ApiResponse(200, "User updated", updatedUser));
+    return res.status(200).json(ApiResponse.UserResponse(200, "User updated", updatedUser));
 }
 
 export const userDeleteController = async (req, res) => {
@@ -101,5 +101,5 @@ export const userDeleteController = async (req, res) => {
 
     await userOperations.userDelete(user._id);
 
-    return res.status(200).json(new ApiResponse(200, "User deleted", user));
+    return res.status(200).json(ApiResponse.UserResponse(200, "User deleted", user));
 }
