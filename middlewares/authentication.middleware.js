@@ -17,5 +17,6 @@ export default asyncHandler((req, res, next) => {
     }
 
     req.user = tokenDecoded.userhandle;
+    req.userId = tokenDecoded.id;
     next();
 });
